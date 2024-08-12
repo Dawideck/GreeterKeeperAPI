@@ -85,7 +85,6 @@ def get_subjects(id:int=None, name:str=None) -> dict:
             ic(id)
             ic(name)
             if id and name:
-                print("jestem w id and name")
                 for subject in subjects["subjects"]:
                     if subject["id"] == id and subject["name"] == name:
                         return subject
@@ -106,4 +105,5 @@ def get_subjects(id:int=None, name:str=None) -> dict:
     except json.JSONDecodeError:
         return {"error": "Error decoding JSON!"}
     except:
+        print("test")
         return {"error": "Unknown error!"}
