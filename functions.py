@@ -105,5 +105,5 @@ def get_subjects(id:int=None, name:str=None) -> dict:
     except json.JSONDecodeError:
         return {"error": "Error decoding JSON!"}
     except:
-        print("test")
+        print("test2")
         return {"error": "Unknown error!"}
