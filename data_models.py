@@ -9,12 +9,10 @@ class AttendancePayload(BaseModel):
     subject: str
 
 
-
 class Attendance(BaseModel):
     id: str
     date: datetime = Field(default_factory=datetime.now)
     subject: str
-
 
 
 class Attendee(BaseModel):
@@ -26,10 +24,8 @@ class Attendee(BaseModel):
     attendance: Optional[List[Attendance]]
 
 
-
 class AllAttendees(BaseModel):
     attendees: List[Attendee]
-
 
 
 class Subject(BaseModel):

@@ -107,3 +107,7 @@ def get_subjects(id:int=None, name:str=None) -> dict:
     except:
         print("test-last-probably-for-sure?")
         return {"error": "Unknown error!"}
+    
+    
+    
+    # testujemy
