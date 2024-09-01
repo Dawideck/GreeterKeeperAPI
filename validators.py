@@ -18,13 +18,7 @@ def is_student_registered(student_id: int, students_list: AllAttendees) -> bool:
             return True
     return False
 
-def is_student_already_logged(student_id: int, date:str, students_list) -> bool:
-    ic(date)
-    for student in students_list["attendees"]:
+def is_student_already_logged(student_id: int, date:str, students_list) -> bool: # refactor to attendance_today or sth like that
+    for student in students_list["attendance_today"]:
         if student["id"] == student_id:
-            ic(student)
-            for attendance in student["attendance"]:
-                ic(attendance)
-                ic(student["attendance"])
-                if attendance["date"] == date:
-                    return True
+            return True

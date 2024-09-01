@@ -5,6 +5,13 @@
 # Ignore virtual environment directories
 venv/
 env/
+.venv/
 
 # Ignore all __pycache__ directories
 __pycache__/
+
+# Ignore the data dir
+data/
+
+# ignore settings file 
+settings.json

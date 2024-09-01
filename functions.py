@@ -7,20 +7,30 @@ list_directory = os.path.join(current_directory, "student_lists")
 attendees_filepath = "data/attendees.json"
 subjects_filepath = "data/subjects.json"
 
-def save_attendance(data) -> bool: # this should be changed to a function that when asked to takes the attendance from today and merges it with the existing
+def save_attendance() -> bool:
     try:
         with open(attendees_filepath, "r+") as file:
-            attendee_check_in = data.__dict__
 
-            attendees = json.loads(file.read())
-            for attendee in attendees["attendees"]:
-                if attendee["id"] == attendee_check_in["id"]:
-                    attendee_without_id = attendee_check_in.copy()
-                    attendee_without_id.pop("id")
-                    attendee["attendance"].append(attendee_without_id)
-
+            attendance_lists = json.loads(file.read())
+            if len(attendance_lists["attendance_today"]) == 0:
+                return True
+            items_to_remove = []
+            for attendance in attendance_lists["attendance_today"]: # think about changing the data to a dict
+                for student in attendance_lists["attendees"]:
+                    if attendance["id"] == student["id"]:
+                        attendance_without_id = attendance.copy()
+                        attendance_without_id.pop("id")
+                        student["attendance"].append(attendance_without_id)
+                        items_to_remove.append(attendance)
+                        
+            for item in items_to_remove:
+                attendance_lists["attendance_today"].remove(item)
+            
+            if len(attendance_lists["attendance_today"]) > 0:
+                return False
+            
             file.seek(0)
-            file.write(json.dumps(attendees, indent=4))
+            file.write(json.dumps(attendance_lists, indent=4))
             file.truncate()
             return True
     except Exception:
@@ -34,12 +44,7 @@ def save_attendance_temp(data) -> bool:
 
             attendees = json.loads(file.read())
             attendees["attendance_today"].append(attendee_check_in)
-            # for attendee in attendees["attendees"]:
-            #     if attendee["id"] == attendee_check_in["id"]:
-            #         attendee_without_id = attendee_check_in.copy()
-            #         attendee_without_id.pop("id")
-            #         attendee["attendance"].append(attendee_without_id)
-
+            
             file.seek(0)
             file.write(json.dumps(attendees, indent=4))
             file.truncate()
@@ -48,7 +53,7 @@ def save_attendance_temp(data) -> bool:
         return False
             
 
-def save_new_user(data) -> bool:
+def save_new_user(data) -> bool: # bug - decide on if either saving id as string or will int suffice, and same for checking in!
     try:
         with open(attendees_filepath, "r+") as file:
             new_student = data.__dict__
@@ -130,6 +135,3 @@ def get_subjects(id:int=None, name:str=None) -> dict:
         print("test-last-probably-for-sure?")
         return {"error": "Unknown error!"}
     
-    
-    
-    # testujemy

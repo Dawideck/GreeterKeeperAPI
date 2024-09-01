@@ -6,22 +6,22 @@ from functions import save_attendance, get_attendees, save_new_user, save_new_su
 
 greeter_keeper = FastAPI()
 
-@greeter_keeper.get("/")
+@greeter_keeper.get("/", tags=["TestRoot"])
 def read_root():
     return {"message": "Welcome to the GreeterKeeper server!"}
 
 
-@greeter_keeper.get("/students/")
+@greeter_keeper.get("/students/", tags=["Students"])
 async def get_students(student_id:int=None):
     return get_attendees(student_id)
 
 
-@greeter_keeper.get("/subjects/")
+@greeter_keeper.get("/subjects/", tags=["Subjects"])
 async def get_topics(id:int=None, name:str=None):
     return get_subjects(id, name)
 
 
-@greeter_keeper.put("/students/")
+@greeter_keeper.put("/students/", tags=["Students"])
 async def check_in_student(data: AttendancePayload):
     student_check_in = data
     if not is_id_correct(student_check_in.id):
@@ -39,7 +39,7 @@ async def check_in_student(data: AttendancePayload):
     return {"message": "Student checked in successfully!"}
 
 
-@greeter_keeper.post("/students/")
+@greeter_keeper.post("/students/", tags=["Students"])
 async def add_new_student(data: Attendee):
     new_student = data
     if not is_id_correct(new_student.id):
@@ -54,9 +54,17 @@ async def add_new_student(data: Attendee):
         return {"message": "New student added successfully!"}
     else:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Error saving data!")
+    
+    
+@greeter_keeper.put("/attendance/save_attendance", tags=["Attendance"])
+async def transfer_attendance_from_today():
+    if save_attendance():
+        return {"message": "Attendance saved successfully!"}
+    else:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Error while transferring the attendance from temp! Please review tha data!")
 
 
-@greeter_keeper.post("/subjects/")
+@greeter_keeper.post("/subjects/", tags=["Subjects"])
 async def add_new_subject(data: Subject):
 
     # validation succeeded, proceed with saving the data
