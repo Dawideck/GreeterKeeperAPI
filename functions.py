@@ -7,7 +7,7 @@ list_directory = os.path.join(current_directory, "student_lists")
 attendees_filepath = "data/attendees.json"
 subjects_filepath = "data/subjects.json"
 
-def save_attendance(data) -> bool:
+def save_attendance(data) -> bool: # this should be changed to a function that when asked to takes the attendance from today and merges it with the existing
     try:
         with open(attendees_filepath, "r+") as file:
             attendee_check_in = data.__dict__
@@ -25,6 +25,28 @@ def save_attendance(data) -> bool:
             return True
     except Exception:
         return False
+    
+    
+def save_attendance_temp(data) -> bool:
+    try:
+        with open(attendees_filepath, "r+") as file:
+            attendee_check_in = data.__dict__
+
+            attendees = json.loads(file.read())
+            attendees["attendance_today"].append(attendee_check_in)
+            # for attendee in attendees["attendees"]:
+            #     if attendee["id"] == attendee_check_in["id"]:
+            #         attendee_without_id = attendee_check_in.copy()
+            #         attendee_without_id.pop("id")
+            #         attendee["attendance"].append(attendee_without_id)
+
+            file.seek(0)
+            file.write(json.dumps(attendees, indent=4))
+            file.truncate()
+            return True
+    except Exception:
+        return False
+            
 
 def save_new_user(data) -> bool:
     try:
