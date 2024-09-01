@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, status
 from validators import is_id_correct, is_student_registered, is_student_already_logged
 from data_models import AttendancePayload, Attendee, Subject
 from icecream import ic
-from functions import save_attendance, get_attendees, save_new_user, save_new_subject, get_subjects
+from functions import save_attendance, get_attendees, save_new_user, save_new_subject, get_subjects, save_attendance_temp
 
 greeter_keeper = FastAPI()
 
@@ -35,7 +35,7 @@ async def check_in_student(data: AttendancePayload):
 
     # validation succeeded, proceed with saving the data
     print("save to file will run")
-    save_attendance(student_check_in)
+    save_attendance_temp(student_check_in)
     return {"message": "Student checked in successfully!"}
 
 
