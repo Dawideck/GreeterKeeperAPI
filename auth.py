@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
 from data_models import User, UserInDB
-from mock_data import mock_db
+from data.mock_data import mock_db
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")    
     
