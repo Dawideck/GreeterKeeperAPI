@@ -31,3 +31,14 @@ class AllAttendees(BaseModel):
 class Subject(BaseModel):
     id: int
     name: str
+    
+    
+class User(BaseModel):
+    username: str
+    email: str | None = None
+    full_name: str | None = None
+    disabled: bool | None = None
+   
+    
+class UserInDB(User):
+    password: str
