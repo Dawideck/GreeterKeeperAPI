@@ -1,6 +1,3 @@
-# Ignore mocked data
-mock_data.py
-
 # Ignore Python compiled files
 *.pyc
 *.pyo
