@@ -16,12 +16,14 @@ class Attendance(BaseModel):
 
 
 class Attendee(BaseModel):
-    id: int
+    id: str
     name: str
+    surname: str
     age: int
     is_active: bool
     date_joined: str
-    attendance: Optional[List[Attendance]]
+    date_left: Optional[str] = None
+    attendance: Optional[List[Attendance]] = None
 
 
 class AllAttendees(BaseModel):
@@ -32,13 +34,8 @@ class Subject(BaseModel):
     id: int
     name: str
     
-    
-class User(BaseModel):
-    username: str
-    email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
-   
-    
-class UserInDB(User):
-    password: str
+class StudentEditPayload(BaseModel):
+    name: Optional[str] = None
+    surname: Optional[str] = None
+    is_active: bool
+
