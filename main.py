@@ -1,12 +1,15 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from validators import is_id_correct, is_student_registered, is_student_already_logged
 from data_models import AttendancePayload, Attendee, Subject, StudentEditPayload
 from icecream import ic
 from functions import save_attendance, get_attendees, save_new_user, save_new_subject, get_subjects, save_attendance_temp, deactivate_student, edit_student_details
 
-greeter_keeper = FastAPI()
 
-@greeter_keeper.get("/", tags=["TestRoot"])
+greeter_keeper = FastAPI()
+    
+@greeter_keeper.get("/", tags=["TestRoot"], summary="Test endpoint")
 def read_root():
     return {"message": "Welcome to the GreeterKeeper server!"}
 

@@ -34,9 +34,8 @@ class Subject(BaseModel):
     id: int
     name: str
     
-    
 class StudentEditPayload(BaseModel):
     name: Optional[str] = None
     surname: Optional[str] = None
     is_active: bool
-    
+
